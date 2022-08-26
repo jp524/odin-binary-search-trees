@@ -1,3 +1,6 @@
+# frozen_string_literal: false
+
+# Creates a node containing data and a pointer to its left and right children
 class Node
   attr_accessor :data, :left, :right
 
@@ -14,6 +17,7 @@ class Node
   end
 end
 
+# Creates a tree containing nodes
 class Tree
   attr_reader :root
 
@@ -29,13 +33,13 @@ class Tree
     @array.sort!.uniq!
   end
 
-  def build_tree(array = @array, start = @start, finish = @finish)
+  def build_tree(start = @start, finish = @finish)
     return nil if start > finish
 
     mid = (start + finish) / 2
-    node = Node.new(array[mid])
-    node.left = build_tree(array, start, mid - 1)
-    node.right = build_tree(array, mid + 1, finish)
+    node = Node.new(@array[mid])
+    node.left = build_tree(start, mid - 1)
+    node.right = build_tree(mid + 1, finish)
     @root = node
   end
 
