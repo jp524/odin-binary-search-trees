@@ -34,12 +34,19 @@ class Tree
 
     mid = (start + finish) / 2
     node = Node.new(array[mid])
-    node.left = array[start..mid - 1]
-    node.right = array[mid + 1..finish]
+    node.left = build_tree(array, start, mid - 1)
+    node.right = build_tree(array, mid + 1, finish)
     @root = node
+  end
+
+  # pretty_print method from TOP community
+  def pretty_print(node = @root, prefix = '', is_left = true)
+    pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
+    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
+    pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
 end
 
-tree = Tree.new([1, 2, 3])
+tree = Tree.new([1, 2, 3, 4, 5, 6, 7])
 tree.build_tree
-p tree.root
+tree.pretty_print
