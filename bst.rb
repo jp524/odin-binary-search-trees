@@ -53,6 +53,7 @@ class Tree
   def insert(value, root = @root)
     node = Node.new(value)
 
+    puts 'Tree is empty. Start by calling Tree.new([array] then #build_tree.' if root.nil?
     case node <=> root
     when 1
       root.right = node if root.right.nil?
@@ -62,11 +63,15 @@ class Tree
       insert(value, root.left)
     end
   end
+
+  def delete(value, root = @root)
+    puts 'Tree is empty. Start by calling Tree.new([array] then #build_tree.' if root.nil?
+  end
 end
 
 tree = Tree.new([1, 2, 3, 4, 5, 6, 8])
 tree.build_tree
 tree.pretty_print
-tree.insert(10)
+tree.delete(8)
 puts "___________________\n\n"
 tree.pretty_print
