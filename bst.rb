@@ -8,8 +8,8 @@ class Node
 
   def initialize(data)
     @data = data
-    @left = []
-    @right = []
+    @left = nil
+    @right = nil
   end
 
   def <=>(other)
@@ -49,8 +49,24 @@ class Tree
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
+
+  def insert(value, root = @root)
+    node = Node.new(value)
+
+    case node <=> root
+    when 1
+      root.right = node if root.right.nil?
+      insert(value, root.right)
+    when -1
+      root.left = node if root.left.nil?
+      insert(value, root.left)
+    end
+  end
 end
 
-tree = Tree.new([1, 2, 3, 4, 5, 6, 7])
+tree = Tree.new([1, 2, 3, 4, 5, 6, 8])
 tree.build_tree
+tree.pretty_print
+tree.insert(10)
+puts "___________________\n\n"
 tree.pretty_print
