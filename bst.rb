@@ -96,21 +96,19 @@ class Tree
     root
   end
 
-  # def find(value, root = @root)
-  #   return if root.nil?
+  def find(value, root = @root)
+    return if root.nil?
 
-  #   node = Node.new(value)
-  #   case node <=> root
-  #   when 1
-  #     find(value, root.right)
-  #   when -1
-  #     find(value, root.left)
-  #   when 0
-  #     puts 'Node found!'
-  #   else
-  #     puts 'Node not found in the tree'
-  #   end
-  # end
+    node = Node.new(value)
+    case node <=> root
+    when 1
+      find(value, root.right)
+    when -1
+      find(value, root.left)
+    when 0
+      root
+    end
+  end
 end
 
 tree = Tree.new([20, 30, 40, 50, 60, 70, 80])
@@ -118,8 +116,5 @@ tree.build_tree
 tree.insert(32)
 tree.insert(34)
 tree.insert(36)
-puts "\nTree before delete"
 tree.pretty_print
-tree.delete(30)
-puts "___________________\n\nTree after calling delete(30)"
-tree.pretty_print
+p tree.find(30)
