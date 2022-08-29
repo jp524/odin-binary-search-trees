@@ -81,8 +81,12 @@ class Tree
       elsif root.right.nil?
         root.left
       else
+        temp_right = root.right
+        temp_left = root.left
         root = min_value(root.right)
-        root.right = delete(root.data, root.right)
+        root.right = delete(root.data, temp_right)
+        root.left = temp_left
+        root
       end
     end
   end
@@ -117,5 +121,5 @@ tree.insert(36)
 puts "\nTree before delete"
 tree.pretty_print
 tree.delete(30)
-puts "___________________\n\nTree after calling delete(6)"
+puts "___________________\n\nTree after calling delete(30)"
 tree.pretty_print
