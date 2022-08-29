@@ -126,9 +126,44 @@ class Tree
     end
     array
   end
+
+  def inorder(root = @root, array = [], &block)
+    return if root.nil?
+
+    inorder(root.left, array, &block)
+    block.call(root) if block_given?
+    array << root.data
+    inorder(root.right, array, &block)
+    array
+  end
+
+  def preorder(root = @root, array = [], &block)
+    return if root.nil?
+
+    block.call(root) if block_given?
+    array << root.data
+    preorder(root.left, array, &block)
+    preorder(root.right, array, &block)
+    array
+  end
+
+  def postorder(root = @root, array = [], &block)
+    return if root.nil?
+
+    postorder(root.left, array, &block)
+    postorder(root.right, array, &block)
+    block.call(root) if block_given?
+    array << root.data
+    array
+  end
 end
 
 tree = Tree.new([20, 30, 40, 50, 60, 70, 80])
 tree.build_tree
-tree.level_order { |node| puts node.data }
-p tree.level_order
+tree.pretty_print
+p tree.inorder
+tree.inorder { |node| puts node.data }
+p tree.preorder
+tree.preorder { |node| puts node.data }
+p tree.postorder
+tree.postorder { |node| puts node.data }
