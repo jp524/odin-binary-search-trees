@@ -109,12 +109,26 @@ class Tree
       root
     end
   end
+
+  def level_order
+    return if @root.nil?
+
+    queue = []
+    array = []
+    queue << @root
+    until queue.empty?
+      current = queue.first
+      yield current if block_given?
+      array << current.data
+      queue << current.left if current.left
+      queue << current.right if current.right
+      queue.shift
+    end
+    array
+  end
 end
 
 tree = Tree.new([20, 30, 40, 50, 60, 70, 80])
 tree.build_tree
-tree.insert(32)
-tree.insert(34)
-tree.insert(36)
-tree.pretty_print
-p tree.find(30)
+tree.level_order { |node| puts node.data }
+p tree.level_order
