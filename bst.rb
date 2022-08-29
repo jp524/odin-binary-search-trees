@@ -156,14 +156,19 @@ class Tree
     array << root.data
     array
   end
+
+  def height(node)
+    return -1 if node.nil?
+
+    h_left = height(node.left)
+    h_right = height(node.right)
+
+    h_left < h_right ? h_right + 1 : h_left + 1
+  end
 end
 
 tree = Tree.new([20, 30, 40, 50, 60, 70, 80])
 tree.build_tree
 tree.pretty_print
-p tree.inorder
-tree.inorder { |node| puts node.data }
-p tree.preorder
-tree.preorder { |node| puts node.data }
-p tree.postorder
-tree.postorder { |node| puts node.data }
+node = tree.find(30)
+p tree.height(node)
