@@ -180,6 +180,25 @@ class Tree
       count
     end
   end
+
+  def balanced?
+    left_subtree = height(@root.left)
+    right_subtree = height(@root.right)
+    return true if (left_subtree - right_subtree).abs <= 1
+
+    false
+  end
+
+  def rebalance
+    puts 'Tree is already balanced' if balanced?
+
+    @array = inorder
+    @start = 0
+    @finish = @array.size - 1
+    build_tree
+    puts "\nAfter rebalancing:\n\n"
+    pretty_print
+  end
 end
 
 tree = Tree.new([20, 30, 40, 50, 60, 70, 80])
@@ -188,5 +207,5 @@ tree.insert(32)
 tree.insert(34)
 tree.insert(36)
 tree.pretty_print
-node = tree.find(80)
-p tree.depth(node)
+p tree.balanced?
+tree.rebalance
