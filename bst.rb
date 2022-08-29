@@ -201,11 +201,4 @@ class Tree
   end
 end
 
-tree = Tree.new([20, 30, 40, 50, 60, 70, 80])
-tree.build_tree
-tree.insert(32)
-tree.insert(34)
-tree.insert(36)
-tree.pretty_print
-p tree.balanced?
-tree.rebalance
+require './driver_script'
