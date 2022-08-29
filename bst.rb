@@ -165,10 +165,28 @@ class Tree
 
     h_left < h_right ? h_right + 1 : h_left + 1
   end
+
+  def depth(node, root = @root, count = 0) 
+    return if node.nil?
+
+    case node <=> root
+    when 1
+      count += 1
+      depth(node, root.right, count)
+    when -1
+      count += 1
+      depth(node, root.left, count)
+    when 0
+      count
+    end
+  end
 end
 
 tree = Tree.new([20, 30, 40, 50, 60, 70, 80])
 tree.build_tree
+tree.insert(32)
+tree.insert(34)
+tree.insert(36)
 tree.pretty_print
-node = tree.find(30)
-p tree.height(node)
+node = tree.find(80)
+p tree.depth(node)
