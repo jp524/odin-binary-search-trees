@@ -51,9 +51,9 @@ class Tree
   end
 
   def insert(value, root = @root)
-    node = Node.new(value)
+    puts 'Tree is empty. Start by calling Tree.new([array]) then #build_tree.' if root.nil?
 
-    puts 'Tree is empty. Start by calling Tree.new([array] then #build_tree.' if root.nil?
+    node = Node.new(value)
     case node <=> root
     when 1
       root.right = node if root.right.nil?
@@ -65,13 +65,57 @@ class Tree
   end
 
   def delete(value, root = @root)
-    puts 'Tree is empty. Start by calling Tree.new([array] then #build_tree.' if root.nil?
+    puts 'Tree is empty. Start by calling Tree.new([array]) then #build_tree.' if @root.nil?
+
+    node = Node.new(value)
+    case node <=> root
+    when 1
+      root.right = delete(value, root.right)
+      root
+    when -1
+      root.left = delete(value, root.left)
+      root
+    when 0
+      if root.left.nil?
+        root.right
+      elsif root.right.nil?
+        root.left
+      else
+        root = min_value(root.right)
+        root.right = delete(root.data, root.right)
+      end
+    end
   end
+
+  def min_value(root)
+    root = root.left until root.left.nil?
+    root
+  end
+
+  # def find(value, root = @root)
+  #   return if root.nil?
+
+  #   node = Node.new(value)
+  #   case node <=> root
+  #   when 1
+  #     find(value, root.right)
+  #   when -1
+  #     find(value, root.left)
+  #   when 0
+  #     puts 'Node found!'
+  #   else
+  #     puts 'Node not found in the tree'
+  #   end
+  # end
 end
 
-tree = Tree.new([1, 2, 3, 4, 5, 6, 8])
+tree = Tree.new([20, 30, 40, 50, 60, 70, 80])
 tree.build_tree
+tree.insert(32)
+tree.insert(34)
+tree.insert(36)
+puts "\nTree before delete"
 tree.pretty_print
-tree.delete(8)
-puts "___________________\n\n"
+tree.delete(30)
+puts "___________________\n\nTree after calling delete(6)"
 tree.pretty_print
